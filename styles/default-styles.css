@@ -21,6 +21,9 @@ canvas {
   margin-left: 1rem;
 }
 
+#info {
+  width: 800px;
+}
 #volumeLabel{
   margin-left: 1rem;
 }
