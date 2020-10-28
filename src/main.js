@@ -13,16 +13,21 @@ import * as canvas from './canvas.js';
 
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
-    sound1: "media/New Adventure Theme.mp3"
+    sound1: "media/Gold.mp3"
 });
 
 const drawParams = {
     showGradient: true,
-    showBars: true, 
     showCircles: true,
-    showNoise : false,
+    showBoxes: true,
+    showPoints: true,
+    showNoise : true,
     showInvert: false,
-    showEmboss: false
+    showEmboss: false,
+    showCurves: true,
+    beatIntensity: 250,
+    sensitivity: 15,
+    percentDone: 0,
 };
 
 function init() {
@@ -40,7 +45,7 @@ function init() {
 function loop() {
     /* NOTE: This is temporary testing code that we will delete in Part II */
     requestAnimationFrame(loop);
-
+    drawParams.percentDone = audio.getPercentDone();
     canvas.draw(drawParams);
 }
 
@@ -76,6 +81,8 @@ function setupUI(canvasElement) {
 
     //C - hookup volume slider & label
     let volumeSlider = document.querySelector("#volumeSlider");
+    let sensSlider = document.querySelector("#sensSlider");
+    let beatSlider = document.querySelector("#beatSlider");
     let volumeLabel = document.querySelector("#volumeLabel");
 
     //add .oninput event to slider
@@ -86,7 +93,17 @@ function setupUI(canvasElement) {
         volumeLabel.innerHTML = Math.round(e.target.value / 2 * 100);
     }
 
+    sensSlider.oninput = e => {
+        drawParams.sensitivity = e.target.value;
+    }
+
+    beatSlider.oninput = e => {
+        drawParams.beatIntensity = e.target.value;
+    }
+
     volumeSlider.dispatchEvent(new Event("input"));
+    sensSlider.dispatchEvent(new Event("input"));
+    beatSlider.dispatchEvent(new Event("input"));
 
     //D - hookup track <select>
     let trackSelect = document.querySelector("#trackSelect");
@@ -101,8 +118,9 @@ function setupUI(canvasElement) {
 
     //setup checkboxes
     let gradientCheckbox = document.querySelector("#gradientCB");
-    let barsCheckbox = document.querySelector("#barsCB");
     let circlesCheckbox = document.querySelector("#circlesCB");
+    let boxesCheckbox = document.querySelector("#boxesCB");
+    let pointsCheckbox = document.querySelector("#pointsCB");
     let noiseCheckbox = document.querySelector("#noiseCB");
     let invertCheckbox = document.querySelector("#invertCB");
     let embossCheckbox = document.querySelector("#embossCB");
@@ -110,11 +128,14 @@ function setupUI(canvasElement) {
     gradientCheckbox.oninput = e => {
         drawParams.showGradient = gradientCheckbox.checked;
     }
-    barsCheckbox.oninput = e => {
-        drawParams.showBars = barsCheckbox.checked;
-    }
     circlesCheckbox.oninput = e => {
         drawParams.showCircles = circlesCheckbox.checked;
+    }
+    boxesCheckbox.oninput = e => {
+        drawParams.showBoxes = boxesCheckbox.checked;
+    }
+    pointsCheckbox.oninput = e => {
+        drawParams.showPoints = pointsCheckbox.checked;
     }
     noiseCheckbox.oninput = e => {
         drawParams.showNoise = noiseCheckbox.checked;
@@ -124,6 +145,13 @@ function setupUI(canvasElement) {
     }
     embossCheckbox.oninput = e => {
         drawParams.showEmboss = embossCheckbox.checked;
+    }
+
+    let radioButtons = document.querySelectorAll("input[name='echo']");
+    for(let rb of radioButtons) {
+        rb.onchange = e => {
+            audio.setEcho(e.target.value);
+        }
     }
 } // end setupUI
 

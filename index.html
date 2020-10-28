@@ -4,12 +4,17 @@
 <head>
     <meta charset="utf-8" />
     <title>Audio Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@500&family=Titillium+Web:wght@900&display=swap"
+        rel="stylesheet">
     <link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
     <script src="./src/loader.js" type="module"></script>
 </head>
 
 <body>
-    <main>
+    <div id="wrapper">
+        <header>
+            <h1>Owl City Visualizer</h1>
+        </header>
         <div id="canvasWrapper">
             <canvas id="mainCanvas" width="800" height="400"></canvas>
             <canvas id="overlayCanvas" width="800" height="400"></canvas>
@@ -18,12 +23,12 @@
             <section>
                 <button id="playButton" data-playing="no"></button>
                 <button id="fsButton">Full Screen</button>
-
+                <br>
                 <label>Track:
                     <select id="trackSelect">
-                        <option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
-                        <option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
-                        <option value="media/The Picard Song.mp3">The Picard Song</option>
+                        <option value="media/Gold.mp3" selected>Gold</option>
+                        <option value="media/Tokyo.mp3">Tokyo</option>
+                        <option value="media/WolfBite.mp3">Wolf Bite</option>
                     </select>
                 </label>
             </section>
@@ -31,28 +36,35 @@
             <section>
                 Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01">
                 <span id="volumeLabel">???</span>
+                <br>
+                Beat Sensitivity: <input type="range" id="sensSlider" min="0" max="30" value="15" step="1">
+                (Higher values are better at keeping a beat, but perform worse)
+                <br>
+                Beat Intensity: <input type="range" id="beatSlider" min="0" max="500" value="250" step="1">
             </section>
-            <section>
-                <span><input type="checkbox" id="gradientCB" checked><label for="gradientCB">Show Gradient</label></span>
-                <span><input type="checkbox" id="barsCB" checked><label for="barsCB">Show Bars</label></span>
+            <section id="checkboxes">
+                <span><input type="checkbox" id="gradientCB" checked><label for="gradientCB">Show
+                        Gradient</label></span>
                 <span><input type="checkbox" id="circlesCB" checked><label for="circlesCB">Show Circles</label></span>
+                <span><input type="checkbox" id="boxesCB" checked><label for="boxesCB">Show "Beatboxes"</label></span>
+                <span><input type="checkbox" id="pointsCB" checked><label for="pointsCB">Show "Wavepoints"</label></span>
                 <!-- we'll use this 4th checkbox soon! -->
-                <span><input type="checkbox" id="noiseCB"><label for="noiseCB">Show Noise</label></span>
+                <span><input type="checkbox" id="noiseCB" checked><label for="noiseCB">Show Noise</label></span>
                 <span><input type="checkbox" id="invertCB"><label for="invertCB">Invert Colors</label></span>
                 <span><input type="checkbox" id="embossCB"><label for="embossCB">Show Emboss</label></span>
-              </section>
-              <section id="info">
-                  This currently doesn't look like much has changed.
-                      in the back end I'm currently working on doing beat 
-                      detection algorithms - the white, red, and yellow graphs
-                      are a couple different ways of measuring loudness, and
-                      the orange lines are currently where it detects a beat.
-                      The next step is to do math with the differences between
-                      beats to calculate a bpm; then I can make elements pulse 
-                      or react to the actual beat, not just the raw volume.
-              </section>
+            </section>
+            <section>
+                Echo time
+                <br>
+                <input type="radio" id="zero" name="echo" value="0">
+                <label for="zero">0</label><br>
+                <input type="radio" id="half" name="echo" value="0.5" checked>
+                <label for="half">0.5</label><br>
+                <input type="radio" id="one" name="echo" value="1">
+                <label for="one">1</label>
+            </section>
         </div>
-    </main>
+    </div>
 </body>
 
 </html>

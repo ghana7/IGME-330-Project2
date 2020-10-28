@@ -1,14 +1,37 @@
 body {
-	background: #eeeeee;
-	font-family: tahoma, verdana, sans serif;
+	
+  background-image: url(../media/albumCover.jpg);
+  background-size: cover;
+  background-position: center;
+  margin: 0;
 }
 
+#wrapper {
+  background: #eeeeee88;
+  font-family: tahoma, verdana, sans serif;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 8rem 500px 1fr;
+  grid-template-areas: "head head"
+                       "canvas controls";
+                       height: 100vh;
+}
+
+header {
+  grid-area: head;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 3rem;
+}
+h1 {
+  margin: 0;
+}
 canvas {
 	margin-left: 1rem;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 	box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
   position: absolute;
+  grid-area: canvas;
 }
 
 #canvasWrapper {
@@ -19,6 +42,10 @@ canvas {
 
 #controls{
   margin-left: 1rem;
+  grid-area: controls;
+  font-family: "Heebo", sans-serif;
+  background-color: #ffffffcc;
+  padding: 1rem;
 }
 
 #info {
@@ -30,8 +57,12 @@ canvas {
 
 section{
   margin-bottom: 1rem;
+  border: 1px dotted black;
 }
 
+#checkboxes span {
+  display: block;
+}
 #playButton{
   font-size: 1.2rem;
   width: 6rem;
